@@ -1,3 +1,17 @@
+add_library(aoc2020
+    "message_validator.cpp"
+)
+target_link_libraries(aoc2020
+	PRIVATE
+		project_warnings
+		project_options
+)
+target_include_directories(aoc2020
+    PUBLIC
+        "include"
+)
+
+
 option(CPP_STARTER_USE_QT "Enable compilation of QT sample" OFF)
 option(CPP_STARTER_USE_FLTK "Enable compilation of FLTK sample" OFF)
 option(CPP_STARTER_USE_GTKMM "Enable compilation of GTKMM sample" OFF)
@@ -46,8 +60,4 @@ if(CPP_STARTER_USE_INTO)
     message("Using intro")
     add_subdirectory(intro)
 endif()
-
-add_library(aoc2020
-    "aoc2020-19-1.cpp"
-)
 

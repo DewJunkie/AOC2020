@@ -26,9 +26,35 @@ else()
 endif()
 target_link_libraries(catch_main PRIVATE project_options)
 
+
+add_executable(aoc_tests
+	"aoc_2020_19_1_tests.cpp"
+)
+target_link_libraries(aoc_tests
+	PRIVATE
+		aoc2020
+		project_warnings
+		project_options
+		catch_main
+)
+
+catch_discover_tests(
+	  aoc_tests
+	  TEST_PREFIX
+	  "unittests."
+	  REPORTER
+	  xml
+	  OUTPUT_DIR
+	  .
+	  OUTPUT_PREFIX
+	  "unittests."
+	  OUTPUT_SUFFIX
+	  .xml
+)
+
 if(CPP_STARTER_USE_SAMPLE_TESTS)
 	add_executable(tests 
-		tests.cpp
+		"sample/tests.cpp"
 	)
 	target_link_libraries(tests 
 		PRIVATE 
@@ -53,7 +79,9 @@ if(CPP_STARTER_USE_SAMPLE_TESTS)
 	  .xml)
 
 	# Add a file containing a set of constexpr tests
-	add_executable(constexpr_tests constexpr_tests.cpp)
+	add_executable(constexpr_tests 
+		"sample/constexpr_tests.cpp"
+	)
 	target_link_libraries(constexpr_tests 
 		PRIVATE 
 			project_options 
@@ -77,7 +105,7 @@ if(CPP_STARTER_USE_SAMPLE_TESTS)
 	# Disable the constexpr portion of the test, and build again this allows us to have an executable that we can debug when
 	# things go wrong with the constexpr testing
 	add_executable(relaxed_constexpr_tests 
-		constexpr_tests.cpp
+		sample/constexpr_tests.cpp
 	)
 	target_link_libraries(relaxed_constexpr_tests 
 		PRIVATE 
