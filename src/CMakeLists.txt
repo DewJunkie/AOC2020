@@ -4,6 +4,7 @@ option(CPP_STARTER_USE_GTKMM "Enable compilation of GTKMM sample" OFF)
 option(CPP_STARTER_USE_IMGUI "Enable compilation of ImGui sample" OFF)
 option(CPP_STARTER_USE_NANA "Enable compilation of Nana GUI sample" OFF)
 option(CPP_STARTER_USE_SDL "Enable compilation of SDL sample" OFF)
+option(CPP_STARTER_USE_INTRO "Enable compilation of the sample program" OFF)
 
 # sdl
 if(CPP_STARTER_USE_SDL)
@@ -41,28 +42,12 @@ if(CPP_STARTER_USE_NANA)
   add_subdirectory(nana)
 endif()
 
-# Generic test that uses conan libs
-add_executable(intro main.cpp)
-target_link_libraries(
-  intro
-  PRIVATE project_options
-          project_warnings
-)
-if(USE_VCPKG)
-    find_package(spdlog CONFIG REQUIRED)
-    find_package(docopt CONFIG REQUIRED)
-    target_link_libraries(intro
-        PRIVATE
-            spdlog::spdlog
-            docopt
-            fmt::fmt
-    )
-else()
-    target_link_libraries(
-        intro
-        PRIVATE
-            CONAN_PKG::docopt.cpp
-            CONAN_PKG::fmt
-            CONAN_PKG::spdlog
-    )
+if(CPP_STARTER_USE_INTO)
+    message("Using intro")
+    add_subdirectory(intro)
 endif()
+
+add_library(aoc2020
+    "aoc2020-19-1.cpp"
+)
+
