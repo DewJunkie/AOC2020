@@ -37,6 +37,8 @@ enable_doxygen()
 # allow for static analysis options
 include(cmake/StaticAnalyzers.cmake)
 
+option(USE_VCPKG "Use vcpkg instead of conan" ON)
+
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
 option(ENABLE_TESTING "Enable Test Builds" ON)
 option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
@@ -57,8 +59,10 @@ if(ENABLE_PCH)
 endif()
 
 # Set up some extra Conan dependencies based on our needs before loading Conan
-set(CONAN_EXTRA_REQUIRES "")
-set(CONAN_EXTRA_OPTIONS "")
+if(!USE_VCPKG)
+    set(CONAN_EXTRA_REQUIRES "")
+    set(CONAN_EXTRA_OPTIONS "")
+endif()
 
 if(CPP_STARTER_USE_IMGUI)
   set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} imgui-sfml/2.1@bincrafters/stable)
@@ -72,8 +76,10 @@ if(CPP_STARTER_USE_SDL)
   # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sdl2:wayland=True)
 endif()
 
-include(cmake/Conan.cmake)
-run_conan()
+if(!USE_VCPKG)
+    include(cmake/Conan.cmake)
+    run_conan()
+endif()
 
 if(ENABLE_TESTING)
   enable_testing()
