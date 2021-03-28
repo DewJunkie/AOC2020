@@ -25,11 +25,15 @@ else()
 	target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 endif()
 target_link_libraries(catch_main PRIVATE project_options)
+target_compile_definitions(catch_main 
+	PUBLIC 
+		CATCH_CONFIG_ENABLE_BENCHMARKING
+)
 
 
 add_executable(aoc_tests
 	"aoc_2020_19_1_tests.cpp"
-)
+	"enum_flag.cpp")
 target_link_libraries(aoc_tests
 	PRIVATE
 		aoc2020
