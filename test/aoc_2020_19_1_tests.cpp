@@ -3,12 +3,13 @@
 #pragma warning(pop)
 #include <aoc/message_validator.h>
 
+#include "test_constants.h"
+
 #include <fstream>
 #include <tuple>
 #include <sstream>
+#include <filesystem>
 
-using namespace std::string_literals;
-const auto data_dir = R"(D:\src\AdventOfCode\aoc2020cpp\test\data\)"s;
 
 TEST_CASE("aoc 2020-19-1")
 {
@@ -20,7 +21,9 @@ TEST_CASE("aoc 2020-19-1")
 
   GIVEN(path)
   {
-    std::ifstream input{ data_dir + path };
+    auto input_path = data_dir / path;
+    REQUIRE(std::filesystem::exists(input_path));
+    std::ifstream input{ input_path.native() };
     
     AND_GIVEN("a message validator")
     {
@@ -68,7 +71,9 @@ TEST_CASE("aoc 2020-19-2")
 
   GIVEN(path)
   {
-    std::ifstream input{ data_dir + path };
+    auto input_path = data_dir / path;
+    REQUIRE(std::filesystem::exists(input_path));
+    std::ifstream input{ input_path.native() };
 
     AND_GIVEN("a message validator")
     {
@@ -109,34 +114,36 @@ TEST_CASE("aoc 2020-19-2")
 
 TEST_CASE("aoc 2020-19-1 benchmarks")
 {
-  std::ifstream setup(data_dir + "19-small.txt");
+  auto input_path = data_dir / "19-small.txt";
+  REQUIRE(std::filesystem::exists(input_path));
+  std::ifstream input{ input_path };
   BENCHMARK("no flags")
   {
-    message_validator const validator(setup);
+    message_validator const validator(input);
     return validator.count_valid();
   };
 
   BENCHMARK("optimize rules")
   {
-    message_validator const validator(setup, message_validator::option::optimize_rules);
+    message_validator const validator(input, message_validator::option::optimize_rules);
     return validator.count_valid();
   };
 }
 
 TEST_CASE("aoc 2020-19-2 benchmarks")
 {
-  std::ifstream setup(data_dir + "19-small-2.txt");
+  auto input_path = data_dir / "19-small.txt";
+  REQUIRE(std::filesystem::exists(input_path));
+  std::ifstream input{ input_path };
   BENCHMARK("no flags")
   {
-    setup.seekg(0, std::ifstream::beg);
-    message_validator const validator(setup);
+    message_validator const validator(input);
     return validator.count_valid();
   };
 
   BENCHMARK("optimize rules")
   {
-    setup.seekg(0, std::ifstream::beg);
-    message_validator const validator(setup, message_validator::option::optimize_rules);
+    message_validator const validator(input, message_validator::option::optimize_rules);
     return validator.count_valid();
   };
 }

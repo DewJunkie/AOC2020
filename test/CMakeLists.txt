@@ -33,7 +33,8 @@ target_compile_definitions(catch_main
 
 add_executable(aoc_tests
 	"aoc_2020_19_1_tests.cpp"
-	"enum_flag.cpp")
+	"enum_flag.cpp" 
+	"aoc2015/day1.cpp" "test_constants.h" "aoc2015/day2.cpp" "aoc2015/day3.cpp")
 target_link_libraries(aoc_tests
 	PRIVATE
 		aoc2020

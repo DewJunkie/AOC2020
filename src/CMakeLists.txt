@@ -2,12 +2,15 @@ find_package(fmt CONFIG REQUIRED)
 
 add_library(aoc2020
     "message_validator.cpp"
- "include/util/flag.hpp")
+    "include/util/flag.hpp" 
+    "include/aoc2015/day1.h" 
+    "aoc2015/day1.cpp"
+)
 target_link_libraries(aoc2020
-	PRIVATE
+    PRIVATE
         fmt::fmt
-		project_warnings
-		project_options
+        project_warnings
+        project_options
 )
 target_include_directories(aoc2020
     PUBLIC
