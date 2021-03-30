@@ -7,7 +7,7 @@
 #include <fstream>
 
 
-const std::filesystem::path data_dir( R"(C:\src\adventofcode\AOC2020\test\data)");
+const std::filesystem::path data_dir( R"(D:\src\AdventOfCode\aoc2020cpp\test\data)");
 
 enum class input_type
 {
