@@ -35,10 +35,17 @@ find_package(OpenSSL REQUIRED)
 
 add_executable(aoc_tests
 	"aoc_2020_19_1_tests.cpp"
+	"test_constants.h"
 	"enum_flag.cpp" 
-	"aoc2015/day1.cpp" "test_constants.h" "aoc2015/day2.cpp" "aoc2015/day3.cpp"
+	"aoc2015/day1.cpp" 
+	"aoc2015/day2.cpp"
+	"aoc2015/day3.cpp"
 	"aoc2015/day4.cpp"
-	 "aoc2015/day5.cpp")
+	"aoc2015/day5.cpp" 
+	"aoc2015/day6.cpp"
+	"aoc2020/y2020d20.cpp" 
+	"aoc2015/day7.cpp" 
+	"aoc2015/day8.cpp")
 target_link_libraries(aoc_tests
 	PRIVATE
 		aoc2020

@@ -3,3 +3,5 @@
 /out
 /*.user
 /CMakeSettings.json
+/.idea
+/cmake-build-debug

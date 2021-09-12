@@ -82,7 +82,7 @@ TEST_CASE("aoc2015 day 5-2")
     std::make_tuple(1, input_type::test_data, "aaaa"),
     std::make_tuple(0, input_type::test_data, "uurcxstgmygtbstg"),
     std::make_tuple(0, input_type::test_data, "ieodomkazucvgmuy"),
-    std::make_tuple(236, input_type::file_path, "2015-5.txt"));
+    std::make_tuple(51, input_type::file_path, "2015-5.txt"));
 
   SECTION(test_data)
   {

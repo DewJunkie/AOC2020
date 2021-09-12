@@ -9,7 +9,8 @@
 #include <iostream>
 #include <algorithm>
 
-using rule_type = std::variant<char,int>;
+using rule_index_t = uint8_t;
+using rule_type = std::variant<char,rule_index_t>;
 
 bool rule_in_use(const std::vector<std::vector<std::vector<rule_type>>> &rules, int rule_number)
 {
@@ -17,7 +18,7 @@ bool rule_in_use(const std::vector<std::vector<std::vector<rule_type>>> &rules, 
   for (auto& rule : rules) {
     for(auto& sub_rule: rule) {
       for(auto& c: sub_rule) {
-        if (c.index() == 1 && std::get<int>(c) == rule_number) {
+        if (c.index() == 1 && std::get<rule_index_t>(c) == rule_number) {
           return true;
         }
       }
@@ -49,7 +50,7 @@ void print_rules(const std::vector<std::vector<std::vector<rule_type>>>& rules)
           if (c.index() == 0)
             std::cout << '"' << std::get<char>(c) << '"';
           else
-            std::cout << std::get<int>(c);
+            std::cout << std::get<rule_index_t>(c);
           std::cout << " ";
         }
       }
@@ -79,7 +80,7 @@ void message_validator::impl::optimize_rules()
         auto value_index = 0;
         for (auto value = sub_rule.begin(); value != sub_rule.end(); ++value) {
           if (value->index() == 1) {
-            auto &lookup = rules[std::get<int>(*value)];
+            auto &lookup = rules[std::get<rule_index_t>(*value)];
             if (lookup.size() == 1) {
               ++replaced_count;
               std::vector<rule_type> replacement_sub_rule(sub_rule.begin(), value);
@@ -128,7 +129,7 @@ message_validator::message_validator(std::istream &setup, flag<option> options /
 
     } else if (std::isdigit(temp[0])) {
 
-      int sub_rule;
+      rule_index_t sub_rule;
       std::from_chars(temp.data(), temp.data() + temp.size(), sub_rule);
       impl_->rules[rule_index][sub_rule_index].emplace_back(sub_rule);
 
@@ -198,7 +199,7 @@ int message_validator::count_valid() const
             found = true;
           }
         } else {
-          for (auto &sub_rule : rules[std::get<int>(*c)]) {
+          for (auto &sub_rule : rules[std::get<rule_index_t>(*c)]) {
             auto &added = work_queue.emplace_back(current.begin(), c);
             for (auto &replacement : sub_rule) {
               added.emplace_back(replacement);

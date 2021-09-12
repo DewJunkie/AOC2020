@@ -1,5 +1,5 @@
 #pragma once
-#pragma warning(push, 1)
+#pragma warning(push, 0)
 #include <catch2/catch.hpp>
 #pragma warning(pop)
 #include <filesystem>
